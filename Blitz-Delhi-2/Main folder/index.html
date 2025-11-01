@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeWAFE - Decentralized Web App For Everything</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated background effect */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: bgMove 20s linear infinite;
+        }
+
+        @keyframes bgMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #8a2be2, #9d4edd);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        }
+
+        .app-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #8a2be2, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #da70d6;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .connect-btn {
+            background: linear-gradient(135deg, #8a2be2, #9d4edd);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(138, 43, 226, 0.6);
+            background: linear-gradient(135deg, #9d4edd, #8a2be2);
+        }
+
+        /* Main Content */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .hero-section {
+            width: 100%;
+            text-align: center;
+            padding: 0;
+            background: #000 url('hero.png') center center no-repeat ;
+            background-size: contain;
+            min-height: 90vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section img {
+            display: none;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #da70d6, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8a2be2, #9d4edd);
+            color: white;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(138, 43, 226, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid #8a2be2;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(138, 43, 226, 0.1);
+            border-color: #da70d6;
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 4rem 0;
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(138, 43, 226, 0.05);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #8a2be2;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #8a2be2, #9d4edd);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #da70d6;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* About Us Section */
+        .about-section {
+            padding: 4rem 0;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-description:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(138, 43, 226, 0.2);
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                border-top: 1px solid rgba(138, 43, 226, 0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav {
+                padding: 1rem 3%;
+            }
+
+            .hero-section {
+                min-height: 40vh;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-name {
+                font-size: 1.3rem;
+            }
+
+            .connect-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Floating particles effect */
+        .particle {
+            position: fixed;
+            background: rgba(138, 43, 226, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.5; }
+            50% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+        }
+
+        .logo_holder {
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo_holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo-section">
+            <div class="logo_holder"><img src="logo.png"></div>
+            <div class="app-name">DeWAFE</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="chatapp.html">ChatApp</a></li>
+            <li><a href="vault3.html">Vault3</a></li>
+            <li><a href="wallet.html">Wallet</a></li>
+            <li><a href="arena.html">Arena</a></li>
+        </ul>
+        <button class="connect-btn" onclick="connectWallet()">Connect to MetaMask</button>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <img src="hero.png" alt="Hero Image">
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2 class="section-title">Platform Features</h2>
+            
+            <div class="features-grid">
+                <!-- ChatApp Feature -->
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">ChatApp</h3>
+                    <p class="feature-description">
+                        Decentralized messaging platform that enables secure, private communication 
+                        powered by blockchain technology. Chat with complete privacy and end-to-end encryption.
+                    </p>
+                </div>
+
+                <!-- Vault3 Feature -->
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Vault3</h3>
+                    <p class="feature-description">
+                        Secure storage solution for your digital assets and sensitive data. 
+                        Your files are encrypted and stored on the decentralized network with maximum security.
+                    </p>
+                </div>
+
+                <!-- Wallet Feature -->
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3 class="feature-title">Wallet</h3>
+                    <p class="feature-description">
+                        Manage your cryptocurrencies and digital assets in one secure place. 
+                        Send, receive, and store tokens with full control over your funds.
+                    </p>
+                </div>
+
+                <!-- Arena Feature -->
+                <div class="feature-card">
+                    <div class="feature-icon">⚔️</div>
+                    <h3 class="feature-title">Arena</h3>
+                    <p class="feature-description">
+                        Compete in decentralized gaming and challenges. Participate in tournaments, 
+                        earn rewards, and showcase your skills in the blockchain-powered arena.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="about-section">
+            <hr style="border: none; border-top: 1px solid rgba(138, 43, 226, 0.3); margin: 4rem 0;">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <p class="about-description">
+                    DeWAFE (Decentralized Web App For Everything) is a cutting-edge platform that revolutionizes 
+                    how users interact with decentralized applications. Built on blockchain technology, we provide 
+                    a comprehensive ecosystem that combines secure messaging, encrypted storage, cryptocurrency 
+                    management, and competitive gaming all in one place.
+                </p>
+                <p class="about-description">
+                    Our mission is to empower users with complete control over their data, assets, and digital 
+                    interactions while maintaining the highest standards of security and privacy. We believe in 
+                    a decentralized future where users are not dependent on central authorities and have full 
+                    ownership of their digital lives.
+                </p>
+                <p class="about-description">
+                    Join us in building a more secure, transparent, and user-centric web experience. DeWAFE is 
+                    more than just a platform—it's a movement towards true digital freedom.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Thank you, built during Monad Blitz</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle Function
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Global wallet state
+        let currentAccount = null;
+
+        // Update UI with connected account
+        function updateUI(account) {
+            const btn = document.querySelector('.connect-btn');
+            console.log('updateUI called with account:', account);
+            if (account) {
+                btn.textContent = account.substring(0, 6) + '...' + account.substring(38);
+                btn.style.background = 'linear-gradient(135deg, #00d4aa, #00a67e)';
+                currentAccount = account;
+                console.log('UI updated to connected state');
+            } else {
+                btn.textContent = 'Connect to MetaMask';
+                btn.style.background = 'linear-gradient(135deg, #8a2be2, #9d4edd)';
+                currentAccount = null;
+                console.log('UI updated to disconnected state');
+            }
+        }
+
+        // MetaMask Connection Function
+        async function connectWallet() {
+            console.log('connectWallet called');
+            if (typeof window.ethereum !== 'undefined') {
+                console.log('MetaMask detected');
+                try {
+                    // Request account access
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    console.log('Connected account:', accounts[0]);
+                    updateUI(accounts[0]);
+                    
+                    // Show connection success message
+                    const notification = document.createElement('div');
+                    notification.textContent = '✓ MetaMask connected successfully!';
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 100px;
+                        right: 20px;
+                        background: linear-gradient(135deg, #00d4aa, #00a67e);
+                        color: white;
+                        padding: 15px 25px;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 15px rgba(0, 212, 170, 0.4);
+                        z-index: 10000;
+                        animation: slideIn 0.3s ease;
+                        font-weight: 600;
+                    `;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), 3000);
+                } catch (error) {
+                    console.error('Error connecting to MetaMask:', error);
+                    if (error.code === 4001) {
+                        alert('Please connect to MetaMask. Access request was rejected.');
+                    } else {
+                        alert('Failed to connect to MetaMask. Please try again.');
+                    }
+                }
+            } else {
+                console.log('MetaMask not detected');
+                alert('MetaMask is not installed. Please install MetaMask to use this feature.');
+                window.open('https://metamask.io/download/', '_blank');
+            }
+        }
+
+        // Handle account changes
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length > 0) {
+                    updateUI(accounts[0]);
+                    console.log('Account changed to:', accounts[0]);
+                } else {
+                    updateUI(null);
+                    console.log('Account disconnected');
+                }
+            });
+
+            // Handle chain changes
+            window.ethereum.on('chainChanged', (chainId) => {
+                console.log('Chain changed to:', parseInt(chainId, 16));
+                location.reload();
+            });
+        }
+
+        // Create floating particles
+        function createParticles() {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Check if wallet is already connected on page load
+        window.addEventListener('load', async () => {
+            console.log('Page loaded, checking for MetaMask connection');
+            if (typeof window.ethereum !== 'undefined') {
+                console.log('MetaMask found on page load');
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    console.log('Existing accounts:', accounts);
+                    if (accounts.length > 0) {
+                        updateUI(accounts[0]);
+                    }
+                } catch (error) {
+                    console.error('Error checking accounts:', error);
+                }
+            } else {
+                console.log('MetaMask not found on page load');
+            }
+        });
+    </script>
+</body>
+</html>

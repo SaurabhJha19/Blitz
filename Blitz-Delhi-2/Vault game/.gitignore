@@ -1,0 +1,25 @@
+node_modules/
+cache/
+artifacts/
+.env
+coverage/
+coverage.json
+typechain-types/
+
+# Hardhat files
+.hardhat/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db

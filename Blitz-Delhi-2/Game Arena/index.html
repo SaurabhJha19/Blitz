@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monad Blitz 2 - Web3 Game Arena</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="Game/triggeredBattle.js"></script>
+    <script src="Game/RoadRunner.js"></script>
+    <script src="Game/Puzzle.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Monad Blitz 2</h1>
+            <p class="subtitle">Play, Win, Earn NFTs</p>
+            <div class="wallet-section">
+                <button id="connectWallet" class="btn-primary">Connect Wallet</button>
+                <div id="walletInfo" class="wallet-info hidden"></div>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-grid" id="gameGrid">
+                <!-- Game cards will be dynamically generated -->
+            </div>
+        </main>
+
+        <div id="gameContainer" class="game-container hidden">
+            <div class="game-header">
+                <button id="backToMenu" class="btn-secondary">← Back to Menu</button>
+                <h2 id="gameTitle"></h2>
+                <div class="game-stats">
+                    <div class="stat">
+                        <span>Score:</span>
+                        <span id="score">0</span>
+                    </div>
+                    <div class="stat">
+                        <span>Time:</span>
+                        <span id="timer">0s</span>
+                    </div>
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+            <div id="gameOver" class="game-over hidden">
+                <div class="modal">
+                    <h2>Game Over!</h2>
+                    <p>Final Score: <span id="finalScore">0</span></p>
+                    <p class="reward-message" id="rewardMessage"></p>
+                    <button id="claimNFT" class="btn-primary hidden">Claim NFT Reward</button>
+                    <button id="playAgain" class="btn-secondary">Play Again</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p>Processing your NFT reward...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

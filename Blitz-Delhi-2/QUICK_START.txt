@@ -1,0 +1,54 @@
+================================================================
+    MONAD BLITZ 2 - QUICK START GUIDE
+================================================================
+
+Your Web3 game portal is READY!
+
+🚀 START THE SERVER:
+    npm start
+
+OR:
+    cd "Game Arena"
+    node Server/index.js
+
+🌐 OPEN IN BROWSER:
+    http://localhost:3000
+
+🎮 PLAY THE GAMES:
+    1. Connect your MetaMask wallet
+    2. Choose a game (3 available)
+    3. Play and win!
+    4. Claim your NFT
+
+📋 GAME TARGETS:
+    🎯 Aiming Battle: 300 points in 60s (Hard)
+    🏃 Road Runner: 500 points in 60s (Medium)
+    🧩 Color Match: 2000 points in 120s (Easy)
+
+📁 PROJECT FILES:
+    Game Arena/
+    ├── index.html          ← Main portal
+    ├── style.css           ← Styling
+    ├── app.js              ← Controller
+    ├── Game/               ← 3 games
+    ├── Server/             ← Backend
+    ├── Contracts/          ← NFT contract
+    └── README.md           ← Full docs
+
+🔧 NEED HELP?
+    - README.md has full documentation
+    - GETTING_STARTED.md has setup guide
+    - Check console for errors
+    - Verify MetaMask installed
+
+✅ EVERYTHING WORKING?
+    ✓ Server starts
+    ✓ Portal loads
+    ✓ Games playable
+    ✓ Wallet connects
+    ✓ NFTs claimable
+
+================================================================
+         ENJOY YOUR WEB3 GAME PORTAL! 🎮🚀
+================================================================
+
